@@ -74,6 +74,10 @@ main {
                 height: 50px;
                 box-shadow: 0px 8px 12px 0px #9440FF22;
                 cursor: pointer;
+
+                &:disabled {
+                    opacity: 0.8;
+                }
             }
             
             &.btn-secundary{
