@@ -1,0 +1,40 @@
+<app-default-login-layout
+    title="Mecadoria chegou ? - Registre o transportador"
+    primaryBtnText="Salvar"
+    secundaryBtnText="Voltar"
+    divider="Retorne a Home"
+    (submit)="submit()"
+    (navigate)="navigate()"
+    [disablePrimaryBtn]="!transporteForm.valid"
+>
+<section form-section>
+    <form [formGroup]="transporteForm">
+        <app-primary-input
+            formControlName="motorista"
+            inputName="motorista"
+            type="text"
+            label="Nome do Motorista"
+            placeHolder="Ceará da Bahia"
+            >
+            <img src="/assets/svg/user-icon.svg"/>
+        </app-primary-input>
+        <app-primary-input
+            formControlName="placa"
+            inputName="placa"
+            type="text"
+            label="Placa do véiculo"
+            placeHolder="JRY-0000"
+        >
+            <img src="/assets/svg/user-icon.svg"/>
+        </app-primary-input>
+        <app-primary-input
+        formControlName="fotos"
+        inputName="fotos"
+        type="text"
+        label="Fotos do Transporte"
+    >
+        <img src="/assets/svg/password-icon.svg"/>
+    </app-primary-input>
+    </form>
+</section>
+</app-default-login-layout>

@@ -2,14 +2,14 @@
     <section class="form-section">
         <img src="/assets/svg/logo.svg"/>
         <h2>{{title}}</h2>
-        <ng-content></ng-content>
+        <ng-content class=section select="[form-section]"></ng-content>
         <div class="btn-wrapper">
             <button 
             [disabled]="disablePrimaryBtn"
             class="btn-primary" (click)="submit()">{{primaryBtnText}}</button>
             <div class="divider">
                 <div></div>
-                <span>Esqueceu a senha ?</span>
+                <span>{{divider}}</span>
                 <div></div>
             </div>
             <button class="btn-secundary" (click)="navigate()">{{secundaryBtnText}}</button>
@@ -18,5 +18,7 @@
     <section class="main-section">
         <h1>Lexus - Garantindo a qualidade</h1>
         <img src="/assets/svg/main-illustratation.svg"/>
+        <ng-content select="[main-section]">
+    </ng-content>
     </section>
 </main>

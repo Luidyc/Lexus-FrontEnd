@@ -1,0 +1,15 @@
+<div class="btn-wrapper">
+            <button 
+            class="btn-secundary" (click)="manual()">{{primaryBtnText}}</button>
+            <div class="divider">
+                <div></div>
+            </div>
+            <button class="btn-secundary" (click)="import()">{{secundaryBtnText}}</button>
+</div>
+<ng-container *ngIf="show">
+    <div class="modal">
+      <ng-content></ng-content>
+    </div>
+    <div (click)="toggle()"
+         class="overlay"></div>
+  </ng-container>

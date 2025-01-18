@@ -1,5 +1,6 @@
 @import "../../../../src/styles/variables.scss";
 
+
 main {
     display: flex;
     flex-direction: row;
@@ -7,13 +8,13 @@ main {
     justify-content: center;
 
     section {
-        height: 100vh;
+        height: 80vh;
+        width: 80vh;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
     }
-
 
     .form-section{
         flex-grow: 0.4;
@@ -26,11 +27,21 @@ main {
         }
     }
 
-    .main-section {
-        gap: 8px;
-        flex-grow: 1;
-        background-color:#EEEEEE;
-        
+    .divider{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color:$primary-color;
+        font-weight: 400;
+        gap: 20px;
+        text-transform: uppercase;
+
+        div{
+            width: 3vw;
+            height: 1px;
+            background-color: $gray-bg;
+        }
 
     }
     
@@ -42,23 +53,7 @@ main {
         justify-content: center;
         gap: 30px;
 
-        .divider{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color:$primary-color;
-            font-weight: 400;
-            gap: 20px;
-            text-transform: uppercase;
 
-            div{
-                width: 3vw;
-                height: 1px;
-                background-color: $gray-bg;
-            }
-
-        }
 
         button {
             width: 75%;
@@ -79,13 +74,6 @@ main {
                 &:disabled {
                     opacity: 0.8;
                 }
-            }
-            
-            &.btn-secundary{
-                border: 1px solid $primary-color;
-                color: $primary-color;
-                height: 50px;
-                cursor: pointer;
             }
         }
 

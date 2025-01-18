@@ -1,0 +1,41 @@
+<main>
+    <section class="form-section">
+        <h2>{{title}}</h2>
+        <div class="divider">
+            <div></div>
+            <span>Preencha todos os campos para Salvar</span>
+            <div></div>
+        </div>
+        <form [formGroup]="notasForm">
+        <div formGroupName="produto">
+            <app-primary-input
+            formControlName="nomeProduto"
+            inputName="nomeProduto"
+            type="text"
+            label="Nome do produto: "
+            >
+            </app-primary-input>
+            <app-primary-input
+            formControlName="codigo"
+            inputName="codigo"
+            type="text"
+            label="Código do produto: "
+            >
+            </app-primary-input>
+        </div>
+    <app-primary-input
+        formControlName="qntdDaNota"
+        inputName="qntdDaNota"
+        type="text"
+        label="Quantidade da nota: "
+        >
+    </app-primary-input>    
+        <div class="btn-wrapper">
+            <button 
+            type="button"
+            [disabled]="disablePrimaryBtn"
+            class="btn-primary" (click)="salvandoItem()">{{primaryBtnText}}</button>
+        </div>
+    </form>
+    </section>
+</main>

@@ -1,0 +1,46 @@
+<app-default-login-layout
+    title="Antes de conferir - Quais notas foram recebidas ?"
+    primaryBtnText="Salvar"
+    secundaryBtnText="Voltar"
+    divider="Retornar para área do Transporte"
+    (submit)="submit()"
+    (navigate)="navigate()"
+    [disablePrimaryBtn]="!notasForm.valid"
+>
+    <section form-section>
+    <form [formGroup]="notasForm">
+        <app-primary-input
+            formControlName="numeroNota"
+            inputName="numeroNota"
+            type="text"
+            label="Informe o número das Notas ou Order's"
+            placeHolder="ORDER 2024"
+            >
+            <img src="/assets/svg/user-icon.svg"/>
+        </app-primary-input>
+    </form>
+    <app-nota-input
+    primaryBtnText="Inserir manualmente"
+    secundaryBtnText="Importar arquivo"
+    (manual)="manual()"
+    (import)="import()"
+    >
+    <app-modal-manual
+    title="Cadastre quais foram os produtos recebidos"
+    [disablePrimaryBtn]="!show"
+    primaryBtnText="Adicionar"
+    (submit)="addItemNota($event)"
+    ></app-modal-manual>
+    </app-nota-input>
+</section>
+<div main-section>
+    <div></div>
+    <h3>Lista de Itens</h3>
+    <ul>
+      <li *ngFor="let item of listaItemNota">
+        Nome: {{ item.produto.nomeProduto }}, Código: {{ item.produto.codigo }}, Quantidade: {{ item.qntdDaNota }}
+      </li>
+    </ul> 
+</div>  
+</app-default-login-layout>
+ 
