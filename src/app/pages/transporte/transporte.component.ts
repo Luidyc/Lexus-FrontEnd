@@ -13,19 +13,18 @@ interface transporteForm {
 }
 
 @Component({
-  selector: 'app-transporte',
-  standalone: true,
-  imports: [
-    DefaultLoginLayoutComponent,
-    PrimaryInputComponent,
-    ReactiveFormsModule
-  ],
-  providers: [
-    TransporteService,
-    ToastrService
-  ],
-  templateUrl: './transporte.component.html',
-  styleUrl: './transporte.component.scss'
+    selector: 'app-transporte',
+    imports: [
+        DefaultLoginLayoutComponent,
+        PrimaryInputComponent,
+        ReactiveFormsModule
+    ],
+    providers: [
+        TransporteService,
+        ToastrService
+    ],
+    templateUrl: './transporte.component.html',
+    styleUrl: './transporte.component.scss'
 })
 export class TransporteComponent {
   transporteForm!:FormGroup<transporteForm>;

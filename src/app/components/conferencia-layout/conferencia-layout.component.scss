@@ -1,0 +1,57 @@
+@import "../../../styles/variables.scss";
+
+
+
+    section {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .form-section{
+            width: 88%;
+            color: $text-color;
+            flex-grow: 0.4;
+            background-color: #FFFFFF;
+            padding: 0 35px;
+            gap:34px;
+        }
+    
+        .main-section {
+            gap: 8px;
+            flex-grow: 1;
+            color:black;
+        }
+
+    }   
+
+
+.card{
+    height: 92vh;
+    width: 60vw;
+    background-color:#FFFFFF;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 2rem;
+    border: 1px solid $primary-color;
+    
+
+    tr{
+        display: table-row;
+        vertical-align: inherit;
+        unicode-bidi: isolate;
+        border-color: inherit;
+
+        th{
+            display: table-cell;
+            vertical-align: inherit;
+            font-weight: bold;
+            text-align: -internal-center;
+            unicode-bidi: isolate;
+        }
+
+    }
+
+}
+

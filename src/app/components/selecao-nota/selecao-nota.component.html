@@ -1,0 +1,20 @@
+<main>
+<form class="form-section" [formGroup]="form">
+
+    <div class="scroll-container" formArrayName="notas">
+      <div
+        *ngFor="let nota of notasArray.controls; let i = index"
+        [formGroupName]="i"
+        class="nota-item"
+      >
+        <label>
+          <input type="checkbox" formControlName="selecionada" />
+          {{ notasFiscais[i].nome }} (ID: {{ notasFiscais[i].id }})
+        </label>
+      </div>
+    </div>
+    <div class="btn-wrapper">
+    <button type="button" (click)="gerarJson()">Confirmar Seleção</button>
+    </div>
+  </form>
+</main>

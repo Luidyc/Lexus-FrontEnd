@@ -8,35 +8,42 @@ import { NotaInputComponent } from "../../components/nota-input/nota-input.compo
 import { NotasService } from '../../services/notas/notas.service';
 import { ModalManualComponent } from "../../components/modal-manual/modal-manual.component";
 import { ItemNota } from '../../types/itemnota-response.type';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
+
+interface Transporte {
+  idTransporte:Number
+}
 
 interface notasForm {
+  idTransporte:Transporte
   numeroNota:FormControl
   listaItemNota:ItemNota[]
 }
 
 
 @Component({
-  selector: 'app-notas',
-  standalone: true,
-  imports: [
-    DefaultLoginLayoutComponent,
-    PrimaryInputComponent,
-    ReactiveFormsModule,
-    NotaInputComponent,
-    ModalManualComponent,
-    NgFor,
-    ModalManualComponent,
-],
-  providers: [
-    NotasService,
-    ToastrService
-  ],
-  templateUrl: './notas.component.html',
-  styleUrl: './notas.component.scss'
+    selector: 'app-notas',
+    standalone:true,
+    imports: [
+        DefaultLoginLayoutComponent,
+        PrimaryInputComponent,
+        ReactiveFormsModule,
+        NotaInputComponent,
+        ModalManualComponent,
+        NgFor,
+        NgIf,
+        ModalManualComponent,
+    ],
+    providers: [
+        NotasService,
+        ToastrService
+    ],
+    templateUrl: './notas.component.html',
+    styleUrl: './notas.component.scss'
 })
 export class NotasComponent {
   notasForm!:FormGroup;
+
   show: boolean = false;
   listaItemNota: ItemNota[] = [];
   
@@ -48,13 +55,16 @@ export class NotasComponent {
   
   {
     this.notasForm = new FormGroup({
-      numeroNota:new FormControl('',[Validators.required,Validators.minLength(3)])
+      numeroNota:new FormControl('',[Validators.required,Validators.minLength(3)]),
+      transporte: new FormGroup({
+        id: new FormControl('', [Validators.required]) // Campo ID do transporte
+      })
     })
   }
 
   submit() {
-    console.log(this.notasForm.value.numeroNota,this.listaItemNota)
-    this.notasService.create(this.notasForm.value.numeroNota,this.listaItemNota).subscribe({
+    console.log(this.notasForm.value)
+    this.notasService.create(this.notasForm,this.listaItemNota).subscribe({
       next : () => this.toastService.success("Nota salva com sucesso"),
       error: ()=> this.toastService.error("Verifique as informações","Nota fiscal não salva")
     })

@@ -1,0 +1,15 @@
+<table>
+  <thead>
+    <tr>
+      <th *ngFor="let column of columnsElements">{{ column.titulo }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of dataSource">
+      <td *ngFor="let column of columnsElements">
+        {{ getValueByPath(row, column.campo) }}
+      </td>
+      <span *ngIf=""></span>
+    </tr>
+  </tbody>
+</table>

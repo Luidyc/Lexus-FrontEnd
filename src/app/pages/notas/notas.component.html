@@ -18,6 +18,15 @@
             >
             <img src="/assets/svg/user-icon.svg"/>
         </app-primary-input>
+            
+        <fieldset formGroupName="transporte">
+            <label for="transporteId">ID do Transporte:</label>
+            <input id="transporteId" formControlName="id" type="number" />
+            <div *ngIf="notasForm.get('transporte.id')?.invalid && notasForm.get('transporte.id')?.touched">
+              O ID do transporte é obrigatório.
+            </div>
+          </fieldset>
+
     </form>
     <app-nota-input
     primaryBtnText="Inserir manualmente"

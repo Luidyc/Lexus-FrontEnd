@@ -15,12 +15,12 @@ export interface Produto {
 }
 
 @Component({
-  selector: 'app-modal-manual',
-  standalone: true,
-  imports: [PrimaryInputComponent,ReactiveFormsModule],
-  providers:[ToastrService],
-  templateUrl: './modal-manual.component.html',
-  styleUrl: './modal-manual.component.scss'
+    selector: 'app-modal-manual',
+    standalone:true,
+    imports: [PrimaryInputComponent, ReactiveFormsModule],
+    providers: [ToastrService],
+    templateUrl: './modal-manual.component.html',
+    styleUrl: './modal-manual.component.scss'
 })
 export class ModalManualComponent {
   notasForm!:FormGroup;
