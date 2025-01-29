@@ -1,3 +1,5 @@
+<div><h1>Produtos em conferência</h1></div>
+<div><br></div>
 <table>
   <thead>
     <tr>
@@ -7,9 +9,18 @@
   <tbody>
     <tr *ngFor="let row of dataSource">
       <td *ngFor="let column of columnsElements">
-        {{ getValueByPath(row, column.campo) }}
+        <ng-container *ngIf="column.campo === 'qntdConferida'; else displayMode">
+          <input 
+          type="number"
+          [value]="row[column.campo]"
+
+          placeholder="{{row[column.campo]}}"
+          >
+        </ng-container>
+        <ng-template #displayMode>
+          <span>{{ row[column.campo] }}</span>
+        </ng-template>
       </td>
-      <span *ngIf=""></span>
     </tr>
   </tbody>
 </table>

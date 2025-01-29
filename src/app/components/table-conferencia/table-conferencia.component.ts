@@ -28,7 +28,12 @@ export class TableConferenciaComponent {
       return path.split('.').reduce((acc, key) => (acc ? acc[key] : null), row);
     }
 
+    onInputChange(field:string, value:any) {
+
+      console.log(`Atualizando: Valor = ${value}`)
+    }
+
     ngOnInit() {
-      console.log('Test getValueByPath:', this.getValueByPath(this.dataSource[0], 'Itens.0.Produto.nomeProduto'));
+      
     }
 } 

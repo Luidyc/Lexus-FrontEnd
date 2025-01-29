@@ -10,11 +10,30 @@ import { FormGroup } from '@angular/forms';
 })
 export class NotasService {
   apiUrl : string = "http://localhost:8080/NotaFiscal"
+  token = sessionStorage.getItem("auth-token")
+  headers = new HttpHeaders().set("Authorization",`Bearer ${this.token}`)
   constructor(private httpClient:HttpClient) {}
 
+  formatarDados(apiData: any[]): any[] {
+    const resultado: any[] = [];
+      apiData.forEach((nota) => {
+          resultado.push({
+            id: nota.id,
+            numeroNota: nota.numeroNota,
+            selecionada: false
+          });
+        });
+    return resultado;
+  }
+
+  getAll():Observable<any[]> {
+    const headers = this.headers;
+    return this.httpClient.get<any[]>(
+      this.apiUrl,{headers})
+  }
+
   create(notasForm:FormGroup, itens:ItemNota[]):Observable<NotasResponse> {
-    const token = sessionStorage.getItem("auth-token")
-    const headers = new HttpHeaders().set("Authorization",`Bearer ${token}`)
+    const headers = this.headers;
     return this.httpClient.post<NotasResponse>(
       this.apiUrl,
       {

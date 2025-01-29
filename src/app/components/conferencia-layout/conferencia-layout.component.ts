@@ -1,11 +1,13 @@
-import { Component, NgModule, Optional } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { DefaultLoginLayoutComponent } from "../default-login-layout/default-login-layout.component";
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SelecaoNotaComponent } from "../selecao-nota/selecao-nota.component";
 import { TableConferenciaComponent } from "../table-conferencia/table-conferencia.component";
 import { ConferenciaService } from '../../services/conferencia/conferencia.service';
+import { NotasService } from '../../services/notas/notas.service';
+
 
 interface ColumnConferencia {
   titulo:string
@@ -13,13 +15,6 @@ interface ColumnConferencia {
   tipo:string
 }
 
-interface Conferencia {
-  numeroNota: string
-  motorista:string
-  placa:string
-  quantidadeDeItens: number
-  status:string
-}
 
 interface Column {
   field:string,
@@ -27,19 +22,12 @@ interface Column {
 }
 
 interface NotaFiscal {
-  id: string;
-  numero: string;
-  dataEmissao: string;
+  id: number;
+  numeroNota: string;
   selecionada: boolean; // Para indicar se a nota está selecionada
 }
 
 
-const ELEMENT_DATA: Conferencia[] = [
-  {numeroNota: '202341', motorista: 'Hydrogen', placa: 'JYX-OEWR',quantidadeDeItens: 1.0079, status: 'COMPLETED'},
-  {numeroNota: '202341', motorista: 'Helium', placa:'FXSD-DD',quantidadeDeItens: 4.0026, status: 'PENDENTE'},
-  {numeroNota: '202431', motorista: 'Lithium', placa:'ORXER',quantidadeDeItens: 6.941, status: 'CRIADA'},
-  {numeroNota: '202312', motorista: 'Beryllium', placa:'FJX2911',quantidadeDeItens: 9.0122, status: 'PENDENTE'}
-];
 
   
 
@@ -50,89 +38,87 @@ const ELEMENT_DATA: Conferencia[] = [
     templateUrl: './conferencia-layout.component.html',
     styleUrl: './conferencia-layout.component.scss'
 })
-export class ConferenciaLayoutComponent {
-  
+export class ConferenciaLayoutComponent implements OnChanges{
+  @ViewChild(SelecaoNotaComponent) selecaoNota!: SelecaoNotaComponent
   conferenciaForm!:FormGroup;
   displayedCollums!: Column[];
   ColumnConferencia!: ColumnConferencia[];
+  show=true
 
   dataSource!:any[];
-  conferencias = ELEMENT_DATA;
-  notasFiscais: NotaFiscal[] = [
-    { id: '1', numero: '2025-001', dataEmissao: '2025-01-04',selecionada:false },
-    { id: '2', numero: '2025-002', dataEmissao: '2025-01-03',selecionada:false },
-    { id: '3', numero: '2025-003', dataEmissao: '2025-01-02',selecionada:false },
-  ];
-
-  notasSemConferir:any=[
-    { id: 6, nome: "Nota Fiscal 1" },
-    { id: 7, nome: "Nota Fiscal 2" },
-    { id: 8, nome: "Nota Fiscal 3" },
-    { id: 8, nome: "Nota Fiscal 3" },
-    { id: 8, nome: "Nota Fiscal 3" },
-    { id: 8, nome: "Nota Fiscal 3" },
-    { id: 8, nome: "Nota Fiscal 3" },
-    { id: 8, nome: "Nota Fiscal 3" },
-    { id: 8, nome: "Nota Fiscal 3" }
-  ]
+  notasFiscais: NotaFiscal[] = [];
 
   constructor(
-        private fb: FormBuilder,
         private conferenciaService:ConferenciaService,
-  ) {
-    this.conferenciaForm = this.fb.group({
-      notas: this.fb.array(
-        this.notasFiscais.map(() =>
-          this.fb.group({
-            selecionada: [true],
+        private notaFiscalService:NotasService,
+  ) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes)
+  }
+
+  submit() {
+    const selecionadas = this.selecaoNota.gerarConferencia();
+    
+    if(selecionadas.length > 0 ) {
+      this.conferenciaService.create(selecionadas).subscribe({
+        next:(response) => {
+          this.conferenciaService.getAll().subscribe({
+            next:(data)=>{this.dataSource = this.transformarDados(data)
+            },
+            error:(error)=> {console.log("gpteco")}
           })
-        )
-      ),
+        }
+      })
+    }
+  }
+
+    
+
+  transformarDados(apiData: any[]): any[] {
+    const resultado: any[] = [];
+    
+    apiData.forEach(conferencia => {
+      conferencia.notasFiscais.forEach((nota: { numeroNota:any,itens: any[]; }) => {
+        nota.itens.forEach(item => {
+          resultado.push({
+            id: conferencia.id,
+            numeroNota: nota.numeroNota,
+            conferente: conferencia.conferente,
+            nomeProduto: item.produto.nomeProduto,
+            qntdDaNota: item.qntdDaNota,
+            qntdConferida: item.qntdConferida
+          });
+        });
+      });
     });
-  }
-
-
-
-  get notasArray(): FormArray {
-    return this.conferenciaForm.get('notas') as FormArray;
-  }
-
-  confirmarSelecao() {
-    const notasSelecionadas = this.notasFiscais.filter((_, index) =>
-      this.notasArray.at(index).get('selecionada')?.value
-    );
-
-    console.log('Notas Selecionadas:', notasSelecionadas);
-    // Aqui você pode enviar os dados selecionados para o backend ou realizar outra ação
-  }
   
+    return resultado;
+  }
 
   ngOnInit() {
-    this.displayedCollums = [
-      {field:'conferente', header:'conferente'},
-      {field:'motorista', header:'Motorista'},
-      {field:'placa',header:'Placa'},
-      {field:'quantidadeDeItens',header:'Total de Itens'},
-      {field:'status',header:'Status'}
-    ]
-
     this.ColumnConferencia=[
       {titulo:"ID",campo:"id",tipo:"number"},
-      {titulo:"Numero da Nota",campo:"notasFiscais.1.numeroNota",tipo:"string"},
-      {titulo:"Nome Produto",campo:"notasFiscais.0.itens.0.produto.0.nomeProduto",tipo:"string"},
-      {titulo:"Quantidade da Nota",campo:"notasFiscais.0.itens.0.qntdDaNota.",tipo:"number"},
-      {titulo:"Quantidade Conferida",campo:"Itens.0.qntdConferida",tipo:"number"},
-      {titulo:"Divergência",campo:"conferente",tipo:"number"}
+      {titulo:"Numero da Nota",campo:"numeroNota",tipo:"string"},
+      {titulo:"Nome Produto",campo:"nomeProduto",tipo:"string"},
+      {titulo:"Quantidade da Nota",campo:"qntdDaNota",tipo:"number"},
+      {titulo:"Quantidade Conferida",campo:"qntdConferida",tipo:"number"},
+      {titulo:"Conferente",campo:"conferente",tipo:"number"}
     ]
-    
     this.conferenciaService.getAll().subscribe({
       next:(data) => {
-        this.dataSource = data
+        this.dataSource = []
       },
       error: (error) => {
         console.log("Fez errado otário", error)
       }
-    }) 
+    })
+    this.notaFiscalService.getAll().subscribe({
+      next:(data) => {
+        console.log(data)
+        this.notasFiscais = data
+      }
+    }
+  )
   }
   
 }

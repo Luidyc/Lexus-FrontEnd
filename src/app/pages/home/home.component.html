@@ -1,0 +1,51 @@
+<!-- home-page.component.html -->
+<div class="container">
+
+        <p-menubar [model]="items" />
+
+    <h2>Bem-vindo, {{ username }}!</h2>
+    
+    <div class="conference-table">
+      <h3>Últimas Conferências</h3>
+      
+      <table>
+        <thead class="header">
+          <tr>
+            <th>ID</th>
+            <th>Data/Hora</th>
+            <th>Conferente</th>
+            <th>Notas Fiscais</th>
+            <th>Divergências</th>
+            <th>Editar</th>
+            <th>Excluir</th>
+            <th>Detalhes</th>
+          </tr>
+        </thead>
+        <tbody class="column">
+          <tr *ngFor="let conference of conferences">
+            <td>{{ conference.id }}</td>
+            <td>{{ formatDate(conference.dataConfencia) }}</td>
+            <td>{{ conference.conferente }}</td>
+            <td>{{ conference.notasFiscais.length }}</td>
+            <td>{{ conference.divergencias.length }}</td>
+            <td class="btn-wrapper"><button class="btn-primary">Editar</button></td>
+            <td class="btn-wrapper"><button class="btn-secundary">Excluir</button></td>
+            <td>
+            <div *ngIf="conference.notasFiscais.length > 0">
+              <div class="details" *ngFor="let nota of conference.notasFiscais">
+                <p><strong>Nota:</strong> {{ nota.numeroNota }}</p>
+                <p>Transporte: {{ nota.transporte.motorista }} - {{ nota.transporte.placa }}</p>
+                <ul>
+                  <li *ngFor="let item of nota.itens">
+                    {{ item.produto.nomeProduto }}: 
+                    (Nota: {{ item.qntdDaNota }} | Conferido: {{ item.qntdConferida }})
+                  </li>
+                </ul>
+              </div>
+            </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

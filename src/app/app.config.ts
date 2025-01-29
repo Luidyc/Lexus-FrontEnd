@@ -7,7 +7,6 @@ import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
-import { AuthInterception } from './services/auth/interceptor/interceptor.service';
 
 
 export const appConfig: ApplicationConfig = {
@@ -19,6 +18,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideHttpClient(withFetch()),
     providePrimeNG({}),
-    provideHttpClient(withInterceptors([AuthInterception])),
+    provideHttpClient(withInterceptors([])),
   ]
 };

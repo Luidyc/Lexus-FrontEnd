@@ -3,41 +3,23 @@ title="Selecione as notas para iniciar conferencia"
 primaryBtnText="Iniciar"
 secundaryBtnText="Voltar"
 divider="Retornar para área do Notas Fiscais"
+[disablePrimaryBtn]="false"
+(navigate)="submit()"
+(submit)="submit()"
 >
 <section form-section>
     <div class="form-section">
         <app-selecao-nota
-        [notasFiscais]="notasSemConferir"
+        [notasFiscais]="notasFiscais"
         ></app-selecao-nota>
     </div>
 
 </section>
   <section main-section>
     <div class="main-section">
-        
     <div class="card">
         <app-table-conferencia [columnsElements]="ColumnConferencia" [dataSource]="dataSource"></app-table-conferencia>
-        <h2>Ultimas conferências</h2>
-        <p-table [columns]="displayedCollums" stripedRows  [value]="conferencias" [tableStyle]="{ 'min-width': '50rem' }">
-            <ng-template #header let-colums>
-                <tr>
-                    <th *ngFor="let col of colums">
-                        {{col.header}}
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template #body let-conferencia>
-                <tr>
-                    <td>{{ conferencia.numeroNota }}</td>
-                    <td>{{ conferencia.motorista }}</td>
-                    <td >{{ conferencia.placa }}</td>
-                    <td>{{ conferencia.quantidadeDeItens }}</td>
-                    <td>{{ conferencia.status }}</td>
-                </tr>
-            </ng-template>
-        </p-table>
     </div>
 </div>
 </section>
-
 </app-default-login-layout>

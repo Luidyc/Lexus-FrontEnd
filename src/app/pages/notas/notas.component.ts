@@ -14,11 +14,6 @@ interface Transporte {
   idTransporte:Number
 }
 
-interface notasForm {
-  idTransporte:Transporte
-  numeroNota:FormControl
-  listaItemNota:ItemNota[]
-}
 
 
 @Component({

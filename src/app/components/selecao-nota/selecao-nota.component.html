@@ -9,12 +9,9 @@
       >
         <label>
           <input type="checkbox" formControlName="selecionada" />
-          {{ notasFiscais[i].nome }} (ID: {{ notasFiscais[i].id }})
+          {{ notasFiscais[i].numeroNota }} (ID: {{ notasFiscais[i].id }})
         </label>
       </div>
-    </div>
-    <div class="btn-wrapper">
-    <button type="button" (click)="gerarJson()">Confirmar Seleção</button>
     </div>
   </form>
 </main>
