@@ -26,12 +26,18 @@ export class ConferenciaService {
     return this.httpClient.get<any[]>(this.apiUrl,{headers})
   }
 
+  getById(id:number):Observable<any> {
+    const headers=this.headers;
+    return this.httpClient.get<any[]>(this.apiUrl+`/${id}`,{headers})
+  }
+
+
   create(notasFiscais:ConferenciaRequest[]):Observable<ConferenciaRequest> {
     const headers = this.headers
     return this.httpClient.post<ConferenciaRequest>
     (this.apiUrl,{notasFiscais},{headers}).pipe(
       tap((value)=> {
-        sessionStorage.setItem("notasFiscais",value.id)
+        sessionStorage.setItem("Transporte",value.id.toString())
       }
     ))
    }

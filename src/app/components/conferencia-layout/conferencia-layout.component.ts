@@ -62,8 +62,11 @@ export class ConferenciaLayoutComponent implements OnChanges{
     if(selecionadas.length > 0 ) {
       this.conferenciaService.create(selecionadas).subscribe({
         next:(response) => {
-          this.conferenciaService.getAll().subscribe({
-            next:(data)=>{this.dataSource = this.transformarDados(data)
+          this.conferenciaService.getById(response.id).subscribe({
+            next:(data)=>{
+              console.log("Antes : "+this.dataSource)
+              this.dataSource = this.transformarDados(data)
+              console.log("Depois: "+this.dataSource)
             },
             error:(error)=> {console.log("gpteco")}
           })
@@ -74,23 +77,31 @@ export class ConferenciaLayoutComponent implements OnChanges{
 
     
 
-  transformarDados(apiData: any[]): any[] {
+  transformarDados(apiData: any): any[] {
     const resultado: any[] = [];
-    
-    apiData.forEach(conferencia => {
-      conferencia.notasFiscais.forEach((nota: { numeroNota:any,itens: any[]; }) => {
-        nota.itens.forEach(item => {
-          resultado.push({
-            id: conferencia.id,
-            numeroNota: nota.numeroNota,
-            conferente: conferencia.conferente,
-            nomeProduto: item.produto.nomeProduto,
-            qntdDaNota: item.qntdDaNota,
-            qntdConferida: item.qntdConferida
+  
+    // Se apiData for nulo ou não for um objeto esperado, retorna um array vazio
+    if (!apiData || !apiData.notasFiscais) {
+      return resultado;
+    }
+  
+    // Verifica se notasFiscais é um array antes de iterar
+    if (Array.isArray(apiData.notasFiscais)) {
+      apiData.notasFiscais.forEach((nota: { itens: any[]; }) => {
+        if (Array.isArray(nota.itens)) {
+          nota.itens.forEach((item: { produto: { nomeProduto: any; }; qntdDaNota: any; qntdConferida: any; }) => {
+            resultado.push({
+              id: apiData.id, // ID da conferência
+              dataConfencia: apiData.dataConfencia,
+              conferente: apiData.conferente,
+              nomeProduto: item.produto?.nomeProduto ?? "Desconhecido",
+              qntdDaNota: item.qntdDaNota ?? 0,
+              qntdConferida: item.qntdConferida ?? 0
+            });
           });
-        });
+        }
       });
-    });
+    }
   
     return resultado;
   }

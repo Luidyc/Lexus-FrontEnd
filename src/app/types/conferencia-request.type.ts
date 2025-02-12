@@ -1,3 +1,3 @@
 export type ConferenciaRequest = {
-    id:string
+    id:number
 }

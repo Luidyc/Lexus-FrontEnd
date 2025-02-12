@@ -5,6 +5,7 @@ import { PrimaryInputComponent } from '../../components/primary-input/primary-in
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login/login.service';
 import { ToastrService } from 'ngx-toastr';
+import { HomeComponent } from '../home/home.component';
 
 interface LoginForm{
   username:FormControl,
@@ -20,7 +21,8 @@ interface LoginForm{
     ],
     providers: [
         LoginService,
-        ToastrService
+        ToastrService,
+        Router
     ],
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss'
@@ -30,7 +32,7 @@ export class LoginComponent {
   constructor(
     private router:Router,
     private loginService:LoginService,
-    private toastService:ToastrService
+    private toastService:ToastrService,
   ){
     this.loginForm = new FormGroup({
       username:new FormControl('',[Validators.required]),
@@ -42,13 +44,13 @@ export class LoginComponent {
     console.log(this.loginForm.value.username)
     console.log(this.loginForm.value.password)
     this.loginService.login(this.loginForm.value.username,this.loginForm.value.password).subscribe({
-      next : () => this.toastService.success("Acessando o sistema ..."),
+      next : () => {this.toastService.success("Acessando o sistema ..."), this.router.navigate(["/home"])},
       error: ()=> this.toastService.error("Verifique as informações","Erro ao acessar")
     })
   }
 
   navigate() {
-    this.router.navigate(["recovery"]);
+    this.router.navigate(["/recovery"]);
   }
 
 }
