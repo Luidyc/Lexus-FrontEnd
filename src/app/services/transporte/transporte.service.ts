@@ -25,11 +25,11 @@ export class TransporteService {
     ))
   }
 
-  getAll():Observable<TransporteResponse[]> {
+  getLastTen():Observable<TransporteResponse[]> {
     const token = sessionStorage.getItem("auth-token")
     const headers = new HttpHeaders().set('Authorization',`Bearer ${token}`)
     return this.httpClient.get<TransporteResponse[]>
-    (this.apiUrl,{headers})
+    (this.apiUrl+"/last",{headers})
   }
 
 } 

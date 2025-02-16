@@ -7,13 +7,14 @@
             class="transporte-item"
           >
             <label>
-              <input 
+              <p><input 
               type="checkbox"
               [value]="transporte.id"
               [checked]="transporteControl.value === transporte.id"
               (change)="selecionarTransporte(transporte.id)"
               />
-              Motorista : {{ transporte.motorista }} - Placa :{{transporte.placa}}
+              Motorista: {{ transporte.motorista }} -
+              <br>Placa: {{transporte.placa}}</p>
             </label>
           </div>
         </div>

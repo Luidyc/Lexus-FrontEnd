@@ -50,8 +50,14 @@ export class TransporteComponent {
       this.transporteForm.value.motorista,
       this.transporteForm.value.placa, 
       this.transporteForm.value.fotos).subscribe({
-      next : () => this.toastService.success("Transporte registrado com sucesso"),
-      error: ()=> this.toastService.error("Verifique as informações","Criação de transporte falhou:")
+      next : () => { 
+        this.toastService.success("Transporte registrado com sucesso"),
+        setTimeout(()=>{this.toastService.info("Redirecionando para Notas Fiscais")},2000)
+        setTimeout(()=>{
+          this.router.navigate(['/notas']); 
+        },3000)
+      },
+        error: ()=> this.toastService.error("Verifique as informações","Criação de transporte falhou:")
     })
   }
 

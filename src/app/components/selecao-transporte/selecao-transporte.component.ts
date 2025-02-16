@@ -29,10 +29,10 @@ export class SelecaoTransporteComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.transporteService.getAll().subscribe({
+    this.transporteService.getLastTen().subscribe({
       next: (transportes) => {
         this.transportes = transportes
-        this.toastrService.success("Ultimos transportes carregados")
+        this.toastrService.info("Ultimos transportes carregados")
         console.log(transportes)
         }
     });
