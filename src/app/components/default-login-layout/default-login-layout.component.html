@@ -1,7 +1,7 @@
 <main>
     <section class="form-section">
         <img src="/assets/svg/logo.svg"/>
-        <h2>{{title}}</h2>
+        <h2>{{title}}<h5>{{subtitle}}</h5></h2>
         <ng-content class=section select="[form-section]"></ng-content>
         <div class="btn-wrapper">
             <button 
@@ -17,8 +17,9 @@
     </section>
     <section class="main-section">
         <ng-content select="[main-section]">
-            <h1>Lexus - Garantindo a qualidade</h1>
-            <img src="/assets/svg/main-illustratation.svg"/>
+            <h1>Lexus - Tudo no seu controle</h1>
+            <h5>Registre transportadores, produtos e notas</h5>
+            <img class="main-img" src="/assets/svg/main-logo.png">
         </ng-content>
     </section>
 </main>

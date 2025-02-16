@@ -1,0 +1,21 @@
+
+<main>
+    <form>
+        <div class="scroll-container">
+          <div
+            *ngFor="let transporte of transportes"
+            class="transporte-item"
+          >
+            <label>
+              <input 
+              type="checkbox"
+              [value]="transporte.id"
+              [checked]="transporteControl.value === transporte.id"
+              (change)="selecionarTransporte(transporte.id)"
+              />
+              Motorista : {{ transporte.motorista }} - Placa :{{transporte.placa}}
+            </label>
+          </div>
+        </div>
+      </form>
+    </main>

@@ -7,28 +7,10 @@ import { AuthGuard } from './services/auth/authguard/auth-guard.service';
 import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
-    {
-        path:"login",
-        component:LoginComponent,
-    },
-    {
-        path:"transporte",
-        component:TransporteComponent,
-        canActivate:[AuthGuard],
-    },
-    {
-        path:"notas",
-        component:NotasComponent,
-        canActivate:[AuthGuard],
-    },
-    {
-        path:"conferencia",
-        component:ConferenciaComponent,
-        canActivate:[AuthGuard],
-    },
-    {
-        path:"home",
-        component:HomeComponent,
-        canActivate:[AuthGuard],
-    }
+    {path:'',redirectTo:'/home',pathMatch:'full'},
+    {path:"login",component:LoginComponent,},
+    {path:"transporte",component:TransporteComponent,canActivate:[AuthGuard]},
+    {path:"notas",component:NotasComponent,canActivate:[AuthGuard]},
+    {path:"conferencia",component:ConferenciaComponent,canActivate:[AuthGuard]},
+    {path:"home",component:HomeComponent,canActivate:[AuthGuard],}
 ];

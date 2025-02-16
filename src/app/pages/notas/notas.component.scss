@@ -2,5 +2,16 @@ form {
     width: 40vh;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 1px;
+    
+    .selecao-transporte {
+        margin-bottom: 20px;
+    }
+
+}
+
+.main-img{
+    margin-top: 40px;
+    width: 45vw;
+    height: 65vh;
 }

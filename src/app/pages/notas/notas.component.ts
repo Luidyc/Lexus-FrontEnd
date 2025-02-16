@@ -9,10 +9,8 @@ import { NotasService } from '../../services/notas/notas.service';
 import { ModalManualComponent } from "../../components/modal-manual/modal-manual.component";
 import { ItemNota } from '../../types/itemnota-response.type';
 import { NgFor, NgIf } from '@angular/common';
-
-interface Transporte {
-  idTransporte:Number
-}
+import { SelecaoTransporteComponent } from "../../components/selecao-transporte/selecao-transporte.component";
+import { MenuComponent } from "../menu/menu.component";
 
 
 
@@ -20,15 +18,17 @@ interface Transporte {
     selector: 'app-notas',
     standalone:true,
     imports: [
-        DefaultLoginLayoutComponent,
-        PrimaryInputComponent,
-        ReactiveFormsModule,
-        NotaInputComponent,
-        ModalManualComponent,
-        NgFor,
-        NgIf,
-        ModalManualComponent,
-    ],
+    DefaultLoginLayoutComponent,
+    PrimaryInputComponent,
+    ReactiveFormsModule,
+    NotaInputComponent,
+    ModalManualComponent,
+    NgFor,
+    NgIf,
+    ModalManualComponent,
+    SelecaoTransporteComponent,
+    MenuComponent
+],
     providers: [
         NotasService,
         ToastrService
@@ -58,11 +58,14 @@ export class NotasComponent {
   }
 
   submit() {
-    console.log(this.notasForm.value)
     this.notasService.create(this.notasForm,this.listaItemNota).subscribe({
       next : () => this.toastService.success("Nota salva com sucesso"),
       error: ()=> this.toastService.error("Verifique as informações","Nota fiscal não salva")
     })
+  }
+
+  atualizarTransporteSelecionado(id:number){
+    this.notasForm.get('transporte.id')?.setValue(id)
   }
 
   navigate() {

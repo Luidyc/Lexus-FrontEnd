@@ -1,3 +1,4 @@
+<app-menu></app-menu>
 <app-default-login-layout
     title="Antes de conferir - Quais notas foram recebidas ?"
     primaryBtnText="Salvar"
@@ -5,7 +6,7 @@
     divider="Retornar para área do Transporte"
     (submit)="submit()"
     (navigate)="navigate()"
-    [disablePrimaryBtn]="!notasForm.valid"
+    [disablePrimaryBtn]="!notasForm.valid || listaItemNota.length === 0 "
 >
     <section form-section>
     <form [formGroup]="notasForm">
@@ -18,15 +19,10 @@
             >
             <img src="/assets/svg/user-icon.svg"/>
         </app-primary-input>
-            
-        <fieldset formGroupName="transporte">
-            <label for="transporteId">ID do Transporte:</label>
-            <input id="transporteId" formControlName="id" type="number" />
-            <div *ngIf="notasForm.get('transporte.id')?.invalid && notasForm.get('transporte.id')?.touched">
-              O ID do transporte é obrigatório.
-            </div>
-          </fieldset>
-
+        <app-selecao-transporte class="selecao-transporte"
+        (transporteSelecionado)="atualizarTransporteSelecionado(1)"
+        >
+        </app-selecao-transporte>
     </form>
     <app-nota-input
     primaryBtnText="Inserir manualmente"
@@ -43,13 +39,18 @@
     </app-nota-input>
 </section>
 <div main-section>
+<ng-container *ngIf="listaItemNota.length > 0; else displayMode">
     <div></div>
     <h3>Lista de Itens</h3>
     <ul>
       <li *ngFor="let item of listaItemNota">
         Nome: {{ item.produto.nomeProduto }}, Código: {{ item.produto.codigo }}, Quantidade: {{ item.qntdDaNota }}
       </li>
-    </ul> 
-</div>  
+    </ul>
+  </ng-container>
+    <ng-template #displayMode>
+      <img src="/assets/svg/main-logo.png" class="main-img">
+    </ng-template>
+</div>
 </app-default-login-layout>
  

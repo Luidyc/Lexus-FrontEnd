@@ -1,5 +1,7 @@
+<app-menu></app-menu>
 <app-default-login-layout
-    title="Mecadoria chegou ? - Registre o transportador"
+    title="Mecadoria chegou ?"
+    subtitle="Registre o transportador"
     primaryBtnText="Salvar"
     secundaryBtnText="Voltar"
     divider="Retorne a Home"
@@ -9,12 +11,13 @@
 >
 <section form-section>
     <form [formGroup]="transporteForm">
+
         <app-primary-input
             formControlName="motorista"
             inputName="motorista"
             type="text"
             label="Nome do Motorista"
-            placeHolder="Ceará da Bahia"
+            placeHolder="Condutor responsável"
             >
             <img src="/assets/svg/user-icon.svg"/>
         </app-primary-input>
@@ -23,7 +26,7 @@
             inputName="placa"
             type="text"
             label="Placa do véiculo"
-            placeHolder="JRY-0000"
+            placeHolder="XXXX-XXXX"
         >
             <img src="/assets/svg/user-icon.svg"/>
         </app-primary-input>
@@ -31,7 +34,8 @@
         formControlName="fotos"
         inputName="fotos"
         type="text"
-        label="Fotos do Transporte"
+        label="Registro de fotos"
+        placeHolder="Foto 01"
     >
         <img src="/assets/svg/password-icon.svg"/>
     </app-primary-input>

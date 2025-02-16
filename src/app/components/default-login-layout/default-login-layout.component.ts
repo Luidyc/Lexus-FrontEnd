@@ -13,6 +13,7 @@ export class DefaultLoginLayoutComponent{
 
 
   @Input() title:string = "";
+  @Input() subtitle:string = "";
   @Input() primaryBtnText:string ="";
   @Input() secundaryBtnText:string = "";
   @Input() divider:string ="";

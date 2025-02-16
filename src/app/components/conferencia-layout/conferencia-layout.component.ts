@@ -68,7 +68,7 @@ export class ConferenciaLayoutComponent implements OnChanges{
               this.dataSource = this.transformarDados(data)
               console.log("Depois: "+this.dataSource)
             },
-            error:(error)=> {console.log("gpteco")}
+            error:()=> {console.log("Erro inesperado")}
           })
         }
       })
@@ -116,7 +116,7 @@ export class ConferenciaLayoutComponent implements OnChanges{
       {titulo:"Conferente",campo:"conferente",tipo:"number"}
     ]
     this.conferenciaService.getAll().subscribe({
-      next:(data) => {
+      next:() => {
         this.dataSource = []
       },
       error: (error) => {

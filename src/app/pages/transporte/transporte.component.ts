@@ -5,6 +5,7 @@ import { PrimaryInputComponent } from '../../components/primary-input/primary-in
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TransporteService } from '../../services/transporte/transporte.service';
+import { MenuComponent } from "../menu/menu.component";
 
 interface transporteForm {
   motorista:FormControl,
@@ -15,10 +16,11 @@ interface transporteForm {
 @Component({
     selector: 'app-transporte',
     imports: [
-        DefaultLoginLayoutComponent,
-        PrimaryInputComponent,
-        ReactiveFormsModule
-    ],
+    DefaultLoginLayoutComponent,
+    PrimaryInputComponent,
+    ReactiveFormsModule,
+    MenuComponent
+],
     providers: [
         TransporteService,
         ToastrService

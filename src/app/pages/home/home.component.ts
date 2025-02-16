@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ConferenciaService } from '../../services/conferencia/conferencia.service';
-import { MenuItem } from 'primeng/api';
-import { Menubar } from 'primeng/menubar';
-
+import { MenuComponent } from "../menu/menu.component";
+import { RouterOutlet } from '@angular/router';
 interface Produto {
   codigo: number;
   nomeProduto: string;
@@ -39,7 +38,7 @@ interface Conference {
 }
 @Component({
   selector: 'app-home',
-  imports: [CommonModule,Menubar],
+  imports: [CommonModule, MenuComponent,RouterOutlet],
   providers:[DatePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -48,28 +47,16 @@ export class HomeComponent implements OnInit{
 
     username: string = '';
     conferences: Conference[] = [];
-    items: MenuItem[] | undefined;
+    rotas:any;
   
     constructor(
       private conferenceService: ConferenciaService,
-      private datePipe: DatePipe
+      private datePipe: DatePipe,
     ) {}
   
     ngOnInit(): void {
-      this.items = [
-        {
-          label:'Home',
-          icon:'pi pi-home'
-        },
-        {
-          label:'Transporte',
-          icon:'pi-pi-star'
-        }
-      ]
-
       // Exemplo de obtenção do nome do usuário
       this.username = this.conferenceService.getUser()
-  
       // Exemplo de obtenção das conferências
       this.conferenceService.getAll().subscribe(confs => {
         this.conferences = confs;

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { TransporteResponse } from '../../types/transporte-response.type copy';
 
 @Injectable({
@@ -23,6 +23,13 @@ export class TransporteService {
           sessionStorage.setItem("fotos",value.fotos)
       }
     ))
+  }
+
+  getAll():Observable<TransporteResponse[]> {
+    const token = sessionStorage.getItem("auth-token")
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${token}`)
+    return this.httpClient.get<TransporteResponse[]>
+    (this.apiUrl,{headers})
   }
 
 } 
