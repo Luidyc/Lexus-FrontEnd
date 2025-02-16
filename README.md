@@ -1,4 +1,4 @@
-# Lexus - Front End
+# VScore - Front End
 - Projeto completo com login, autenticação, criação de transportes, notas fiscais e relatórios.
 
 
